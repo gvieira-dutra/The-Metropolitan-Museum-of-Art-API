@@ -1,0 +1,34 @@
+.button-container {
+  margin-right: 0.5rem; /* Adjust the margin to control the spacing */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between; /* This pushes the elements apart */
+  align-items: center; /* Vertically align the items, if needed */
+}
+
+.artwork-card {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.artwork-card-btn-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Make the container full width */
+  padding: 1rem; 
+}
+
+.artwork-card-btn {
+  position: absolute;
+  bottom: 1rem; /* Adjust this value to control the distance from the bottom */
+  right: 1rem; 
+}
+
+.fav-btn{
+ display: flex;
+ justify-content: space-between;
+ align-items:normal;
+}
