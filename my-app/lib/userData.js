@@ -1,3 +1,5 @@
+import { getToken } from './authenticate'
+let token = getToken()
 const dotenv = require('dotenv')
 dotenv.config()
 
