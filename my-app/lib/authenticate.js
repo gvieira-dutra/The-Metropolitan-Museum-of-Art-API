@@ -32,7 +32,6 @@ export function isAuthenticated() {
 
 export async function authenticateUser(user, password) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-    //mode: 'cors',
     method: 'POST',
     body: JSON.stringify({ userName: user, password: password }),
     headers: {
