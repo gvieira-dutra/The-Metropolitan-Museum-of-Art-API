@@ -5,8 +5,7 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { getToken } from '@/my-app/lib/authenticate'
 
-//const fetcher = (url) =>
-  //fetch(url, { headers: { Authorization: `JWT ${getToken()}` } }).then((res) => res.json())
+const fetcher = (url) => fetch(url, { headers: { Authorization: `JWT ${getToken()}` } }).then((res) => res.json())
 
 export default function Register(props) {
   const [user, setUser] = useState('')
@@ -36,13 +35,14 @@ export default function Register(props) {
         </Card.Body>
       </Card>
       <br />
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
+      <Form id="myForm" onSubmit={handleSubmit}>
+        <Form.Group id='myGroup' >
           <Form.Label>User:</Form.Label>
           <Form.Control
             type="text"
             value={user}
             id="userName"
+            autoComplete="username"
             name="userName"
             onChange={(e) => setUser(e.target.value)}
           />

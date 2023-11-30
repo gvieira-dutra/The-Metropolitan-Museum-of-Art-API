@@ -32,6 +32,7 @@ export function isAuthenticated() {
 
 export async function authenticateUser(user, password) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+    //mode: 'cors',
     method: 'POST',
     body: JSON.stringify({ userName: user, password: password }),
     headers: {
@@ -50,8 +51,10 @@ export async function authenticateUser(user, password) {
 }
 
 export async function registerUser(user, password, password2) {
+  
+  console.log('HERE')
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-    mode: 'no-cors',
+    
     method: 'POST',
     body: JSON.stringify({ userName: user, password: password, password2: password2 }),
     headers: {

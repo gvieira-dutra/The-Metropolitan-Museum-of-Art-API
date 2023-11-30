@@ -61,6 +61,7 @@ export default function MainNav() {
               <div className="button-container">
                 <Col xs="auto">
                   <Form.Control
+                  id='searchFormControl'
                     type="text"
                     placeholder="Search"
                     value={searchField}
