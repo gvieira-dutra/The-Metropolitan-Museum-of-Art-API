@@ -51,7 +51,7 @@ export async function authenticateUser(user, password) {
 
 export async function registerUser(user, password, password2) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-
+    mode: 'no-cors',
     method: 'POST',
     body: JSON.stringify({ userName: user, password: password, password2: password2 }),
     headers: {
