@@ -12,10 +12,8 @@ export async function addToFavourites(id) {
     }
   })
 
-  const data = await res.json()
-
   if (res.status === 200) {
-    return data
+    return res.json()
   } else {
     return []
   }
@@ -32,17 +30,15 @@ export async function removeFromFavourites(id) {
     }
   })
 
-  const data = await res.json()
-
   if (res.status === 200) {
-    return data
+    return res.json()
   } else {
     return []
   }
 }
 
 //GET request to favourites/ route, it will retrieve all favourites artwork
-export async function getFavourites() {
+export async function getFavourites(id) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
     method: 'GET',
     headers: {
@@ -51,14 +47,13 @@ export async function getFavourites() {
     }
   })
 
-  //const data = await res.json()
-
   if (res.status === 200) {
     return res.json()
   } else {
     return []
   }
 }
+
 
 export async function addToHistory(id) {
   //PUT request to history/id route, it will allow us to add an artwork to
@@ -71,15 +66,12 @@ export async function addToHistory(id) {
     }
   })
 
-  const data = await res.json()
-
   if (res.status === 200) {
-    return data
+    return res.json()
   } else {
     return []
   }
 }
-
 export async function removeFromHistory(id) {
   //DELETE request to history/id route, it will delete given item from history
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history/${id}`, {
@@ -90,10 +82,8 @@ export async function removeFromHistory(id) {
     }
   })
 
-  const data = await res.json()
-
   if (res.status === 200) {
-    return data
+    return res.json()
   } else {
     return []
   }

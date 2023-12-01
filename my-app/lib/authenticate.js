@@ -1,4 +1,10 @@
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'
+
+export function readToken() {
+  const token = getToken()
+  return token ? jwtDecode(token) : null
+}
+
 
 function setToken(token) {
   localStorage.setItem('access_token', token)
@@ -16,10 +22,6 @@ export function removeToken() {
   localStorage.removeItem('access_token')
 }
 
-export function readToken() {
-  const token = getToken()
-  return token ? jwt_decode(token) : null
-}
 
 export function isAuthenticated() {
   const token = readToken()

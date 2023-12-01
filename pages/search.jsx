@@ -1,45 +1,41 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { Form, Row, Col, Button } from 'react-bootstrap'
-import { useRouter } from 'next/router'
-import { searchHistoryAtom } from '@/store'
 import { useAtom } from 'jotai'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import { searchHistoryAtom } from '@/store'
 import { addToHistory } from '@/my-app/lib/userData'
+import { Form, Row, Col, Button } from 'react-bootstrap'
 
 export default function Search() {
   const route = useRouter()
-
-  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
-
+  
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm()
-
+  
   let queryString = ''
+
+  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
+
   const submitForm = async (data) => {
-    queryString += '?' + data.searchBy + '=true'
+    //Set up parameters accordingly from the received query "data"
+    const { q, searchBy, geoLocation, medium, isHighlight, isOnView } = data
 
-    if (data.geoLocation) {
-      queryString += '&geoLocation=' + data.geoLocation
-    }
+    //Append queryString with the query parameters if available
+    queryString +=
+      `${searchBy}=true` +
+      (geoLocation ? `&geoLocation=${geoLocation}` : "") +
+      (medium ? `&medium=${medium}` : "") +
+      `&isOnView=${isOnView}` +
+      `&isHighlight=${isHighlight}` +
+      `&q=${q}`
 
-    if (data.medium) {
-      queryString += '&medium=' + data.medium
-    }
+    // Add the computed queryString value to the searchHistory
+    setSearchHistory(await addToHistory(queryString))
 
-    queryString += '&isOnView=' + data.isOnView
-
-    queryString += '&isHighlight=' + data.isHighlight
-
-    if (data.q) {
-      queryString += '&q=' + data.q
-    }
-
-    setSearchHistory(await addToHistory(queryString)) 
-
-    route.push(`artwork/${queryString}`)
+    // Finally, using Router to return the artwork in query
+    route.push(`/artwork?${queryString}`)
   }
 
   return (
