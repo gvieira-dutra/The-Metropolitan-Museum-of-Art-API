@@ -4,6 +4,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 import { searchHistoryAtom } from '@/store'
 import { useAtom } from 'jotai'
+import { addToHistory } from '@/my-app/lib/userData'
 
 export default function Search() {
   const route = useRouter()
@@ -17,7 +18,7 @@ export default function Search() {
   } = useForm()
 
   let queryString = ''
-  const submitForm = (data) => {
+  const submitForm = async (data) => {
     queryString += '?' + data.searchBy + '=true'
 
     if (data.geoLocation) {
@@ -36,7 +37,7 @@ export default function Search() {
       queryString += '&q=' + data.q
     }
 
-   setSearchHistory((current) => [...current,  `${queryString}`])
+    setSearchHistory(await addToHistory(queryString)) 
 
     route.push(`artwork/${queryString}`)
   }
