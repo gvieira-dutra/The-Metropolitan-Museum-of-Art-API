@@ -7,32 +7,33 @@ import Error from 'next/error'
 import { useAtom } from 'jotai'
 import { favouritesAtom } from '@/store'
 import { useEffect } from 'react'
+import { addToFavourites, removeFromFavourites } from '@/my-app/lib/userData'
 
-export default function ArtworkCardDetail(prop) {
-  const myObjectID = prop.objectID
+export default function ArtworkCardDetail({ objectID }) {
+  //const objectID = prop.objectID
 
   const [favouritesList, setFavouritesList] = useAtom(favouritesAtom)
-  const [showAdded, setShowAdded] = useState(favouritesList.includes(myObjectID))
-
-  const { data, error } = useSWR(
-    myObjectID
-      ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${myObjectID}`
-      : null
-  )
-
-  const favouritesClicked = () => {
-    if (showAdded) {
-      setFavouritesList((current) => current.filter((fav) => fav != myObjectID))
-      setShowAdded(false)
-    } else {
-      setFavouritesList((current) => [...current, myObjectID])
-      setShowAdded(true)
-    }
-  }
+  const [showAdded, setShowAdded] = useState(false)
 
   useEffect(() => {
-    console.log(favouritesList)
-  })
+    setShowAdded(favouritesList?.includes(objectID))
+  }, [favouritesList])
+  console.log('here')
+  const { data, error } = useSWR(
+    objectID ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}` : null
+  )
+
+  const favouritesClicked = async () => {
+    try {
+      if (showAdded) {
+        setFavouritesList(await removeFromFavourites(objectID))
+      } else {
+        setFavouritesList(await addToFavourites(objectID))
+      }
+    } catch (err) {
+      console.log('could not manipulate favourites info due => ', err)
+    }
+  }
 
   if (error) return <Error statusCode={404} />
 
@@ -87,7 +88,10 @@ export default function ArtworkCardDetail(prop) {
                 <br />
                 <br />
                 <Link href={`/artwork/${data.objectID}`} passHref>
-                  <Button><strong>ID: </strong>{data.objectID}</Button>
+                  <Button>
+                    <strong>ID: </strong>
+                    {data.objectID}
+                  </Button>
                 </Link>
               </div>
             </div>
