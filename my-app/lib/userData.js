@@ -1,7 +1,5 @@
 import { getToken } from './authenticate'
 let token = getToken()
-const dotenv = require('dotenv')
-dotenv.config()
 
 export async function addToFavourites(id) {
   //PUT request to favourites/id route, it will allow us to add an artwork to
@@ -43,8 +41,8 @@ export async function removeFromFavourites(id) {
   }
 }
 
-export async function getFavourites(id) {
-  //GET request to favourites/ route, it will retrieve all favourites artwork
+//GET request to favourites/ route, it will retrieve all favourites artwork
+export async function getFavourites() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
     method: 'GET',
     headers: {
@@ -53,10 +51,10 @@ export async function getFavourites(id) {
     }
   })
 
-  const data = await res.json()
+  //const data = await res.json()
 
   if (res.status === 200) {
-    return data
+    return res.json()
   } else {
     return []
   }
@@ -101,7 +99,7 @@ export async function removeFromHistory(id) {
   }
 }
 
-export async function getHistory(id) {
+export async function getHistory() {
   //GET request to favourites/ route, it will retrieve all history artwork
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history`, {
     method: 'GET',
@@ -111,10 +109,9 @@ export async function getHistory(id) {
     }
   })
 
-  const data = await res.json()
-
+ 
   if (res.status === 200) {
-    return data
+    return res.json()
   } else {
     return []
   }
