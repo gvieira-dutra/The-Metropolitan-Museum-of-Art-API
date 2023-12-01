@@ -7,6 +7,8 @@ export default function Favourites() {
 
   const [favouritesList, setFavouritesList] = useAtom(favouritesAtom)
   
+  if(!favouritesList) return null;
+
   console.log('favoutrites list in FAV PAGE: ', favouritesList)
 
 
