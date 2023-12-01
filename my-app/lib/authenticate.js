@@ -1,4 +1,4 @@
-import { jwt_decode } from "jwt-decode"
+import jwt_decode from 'jwt-decode';
 
 function setToken(token) {
   localStorage.setItem('access_token', token)
@@ -17,12 +17,8 @@ export function removeToken() {
 }
 
 export function readToken() {
-  try {
-    const token = getToken()
-    return token ? jwt_decode(token) : null
-  } catch (err) {
-    return null
-  }
+  const token = getToken()
+  return token ? jwt_decode(token) : null
 }
 
 export function isAuthenticated() {
@@ -50,12 +46,13 @@ export async function authenticateUser(user, password) {
 }
 
 export async function registerUser(user, password, password2) {
-  
-  console.log('HERE')
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-    
     method: 'POST',
-    body: JSON.stringify({ userName: user, password: password, password2: password2 }),
+    body: JSON.stringify({
+      userName: user,
+      password: password,
+      password2: password2
+    }),
     headers: {
       'content-type': 'application/json'
     }
