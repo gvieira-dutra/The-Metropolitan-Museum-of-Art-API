@@ -2,10 +2,7 @@ import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useState } from 'react'
 import { registerUser } from '@/my-app/lib/authenticate'
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
 import { getToken } from '@/my-app/lib/authenticate'
-
-const fetcher = (url) => fetch(url, { headers: { Authorization: `JWT ${getToken()}` } }).then((res) => res.json())
 
 export default function Register(props) {
   const [user, setUser] = useState('')
@@ -25,7 +22,6 @@ export default function Register(props) {
     }
   }
 
-  //const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, fetcher)
 
   return (
     <>
@@ -84,4 +80,3 @@ export default function Register(props) {
   )
 }
 
-//user: cleitinho pass: boa
