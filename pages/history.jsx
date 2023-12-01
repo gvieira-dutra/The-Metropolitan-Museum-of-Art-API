@@ -5,11 +5,12 @@ import { useRouter } from 'next/router'
 import { Card, Button } from 'react-bootstrap'
 import ListGroup from 'react-bootstrap/ListGroup'
 import styles from '@/my-app/styles/History.module.css'
+import { removeFromHistory } from '@/my-app/lib/userData'
 
 export default function History() {
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
   const router = useRouter()
-
+  if (!searchHistory) return null
   let parsedHistory = []
 
   searchHistory.forEach((h) => {
@@ -23,15 +24,11 @@ export default function History() {
     router.push(`../artwork${searchHistory[index]}`)
   }
 
-  const removeHistoryClicked = (e, index) => {
+  const removeHistoryClicked = async (e, index) => {
     e.preventDefault()
 
     e.stopPropagation() // stop the event from trigging other events
-    setSearchHistory((current) => {
-      let x = [...current]
-      x.splice(index, 1)
-      return x
-    })
+    setSearchHistory(await removeFromHistory(searchHistory[index])) 
   }
 
   {
@@ -40,11 +37,11 @@ export default function History() {
         <>
           <ListGroup>
             {parsedHistory.map((myItem, index) => (
-              <ListGroup.Item 
+              <ListGroup.Item
                 className={styles.historyListItem}
                 key={index}
                 onClick={(e) => historyClicked(e, index)}>
-                  <span>You searched: </span>
+                <span>You searched: </span>
                 {Object.keys(myItem).map((key) => (
                   <>
                     {key}: <strong>{myItem[key]}</strong>&nbsp;
