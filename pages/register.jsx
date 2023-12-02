@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { registerUser } from '@/lib/authenticate'
+import { registerUser } from '@/my-app/lib/authenticate'
 import { Card, Form, Alert, Button } from 'react-bootstrap'
 
 export default function Register(props) {
