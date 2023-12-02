@@ -7,37 +7,31 @@ import { Form, Row, Col, Button } from 'react-bootstrap'
 
 export default function Search() {
   const route = useRouter()
-  
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm()
-  
   let queryString = ''
 
+  // Reference to the searchHistory from the searchHistoryAtom
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
 
   const submitForm = async (data) => {
-    //Set up parameters accordingly from the received query "data"
     const { q, searchBy, geoLocation, medium, isHighlight, isOnView } = data
 
-    //Append queryString with the query parameters if available
     queryString +=
       `${searchBy}=true` +
-      (geoLocation ? `&geoLocation=${geoLocation}` : "") +
-      (medium ? `&medium=${medium}` : "") +
+      (geoLocation ? `&geoLocation=${geoLocation}` : '') +
+      (medium ? `&medium=${medium}` : '') +
       `&isOnView=${isOnView}` +
       `&isHighlight=${isHighlight}` +
       `&q=${q}`
 
-    // Add the computed queryString value to the searchHistory
     setSearchHistory(await addToHistory(queryString))
 
-    // Finally, using Router to return the artwork in query
     route.push(`/artwork?${queryString}`)
   }
-
   return (
     <>
       <Form onSubmit={handleSubmit(submitForm)}>
@@ -49,20 +43,15 @@ export default function Search() {
                 type="text"
                 placeholder=""
                 name="q"
-                className={errors?.q && 'is-invalid'}
-                {...register('q', {
-                  required: true
-                })}
+                {...register('q', { required: true })}
+                className={errors.q && 'is-invalid'}
               />
-
-              {errors?.q && <span style={{ color: 'red' }}>*This field is required</span>}
             </Form.Group>
           </Col>
         </Row>
         <Row>
           <Col md={4}>
             <Form.Label>Search By</Form.Label>
-
             <Form.Select name="searchBy" className="mb-3" {...register('searchBy')}>
               <option value="title">Title</option>
               <option value="tags">Tags</option>
@@ -78,11 +67,10 @@ export default function Search() {
                 name="geoLocation"
                 {...register('geoLocation')}
               />
-
               <Form.Text className="text-muted">
-                Case Sensitive String (ie &quot;Europe&quot;, &quot;France&quot;, &quot;Paris&quot;,
+                Case Sensitive String (For example: &quot;Europe&quot;, &quot;France&quot;, &quot;Paris&quot;,
                 &quot;China&quot;, &quot;New York&quot;, etc.), with multiple values separated by
-                the | operator
+                the pipe | operator
               </Form.Text>
             </Form.Group>
           </Col>
@@ -90,11 +78,10 @@ export default function Search() {
             <Form.Group className="mb-3">
               <Form.Label>Medium</Form.Label>
               <Form.Control type="text" placeholder="" name="medium" {...register('medium')} />
-
               <Form.Text className="text-muted">
-                Case Sensitive String (ie: &quot;Ceramics&quot;, &quot;Furniture&quot;,
+                Case Sensitive String (For example: &quot;Ceramics&quot;, &quot;Furniture&quot;,
                 &quot;Paintings&quot;, &quot;Sculpture&quot;, &quot;Textiles&quot;, etc.), with
-                multiple values separated by the | operator
+                multiple values separated by the pipe | operator
               </Form.Text>
             </Form.Group>
           </Col>
