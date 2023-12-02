@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { searchHistoryAtom } from '@/store'
-import { addToHistory } from '@/lib/userData'
+import { addToHistory } from '@/my-app/lib/userData'
 
 export default function Search() {
   const route = useRouter()
