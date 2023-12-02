@@ -1,9 +1,12 @@
 import { useAtom } from 'jotai'
-import { useRouter } from 'next/router'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 import { searchHistoryAtom } from '@/store'
-import { addToHistory } from '@/my-app/lib/userData'
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import { addToHistory } from '@/lib/userData'
 
 export default function Search() {
   const route = useRouter()
@@ -14,7 +17,6 @@ export default function Search() {
   } = useForm()
   let queryString = ''
 
-  // Reference to the searchHistory from the searchHistoryAtom
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
 
   const submitForm = async (data) => {
@@ -68,7 +70,7 @@ export default function Search() {
                 {...register('geoLocation')}
               />
               <Form.Text className="text-muted">
-                Case Sensitive String (For example: &quot;Europe&quot;, &quot;France&quot;, &quot;Paris&quot;,
+                Case Sensitive String (ie &quot;Europe&quot;, &quot;France&quot;, &quot;Paris&quot;,
                 &quot;China&quot;, &quot;New York&quot;, etc.), with multiple values separated by
                 the pipe | operator
               </Form.Text>
@@ -79,7 +81,7 @@ export default function Search() {
               <Form.Label>Medium</Form.Label>
               <Form.Control type="text" placeholder="" name="medium" {...register('medium')} />
               <Form.Text className="text-muted">
-                Case Sensitive String (For example: &quot;Ceramics&quot;, &quot;Furniture&quot;,
+                Case Sensitive String (ie: &quot;Ceramics&quot;, &quot;Furniture&quot;,
                 &quot;Paintings&quot;, &quot;Sculpture&quot;, &quot;Textiles&quot;, etc.), with
                 multiple values separated by the pipe | operator
               </Form.Text>

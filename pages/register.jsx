@@ -1,28 +1,24 @@
-import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useState } from 'react'
-import { registerUser } from '@/my-app/lib/authenticate'
 import { useRouter } from 'next/router'
-import { getToken } from '@/my-app/lib/authenticate'
+import { registerUser } from '@/lib/authenticate'
+import { Card, Form, Alert, Button } from 'react-bootstrap'
 
 export default function Register(props) {
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
   const [warning, setWarning] = useState('')
-
   const router = useRouter()
 
   async function handleSubmit(e) {
     e.preventDefault()
     try {
       await registerUser(user, password, password2)
-      router.push({ pathname: "/login", query: { registered: true } }, "/login")
+      router.push({ pathname: '/login', query: { registered: true } }, '/login')
     } catch (err) {
       setWarning(err.message)
     }
   }
-
-
   return (
     <>
       <Card bg="light">
@@ -31,14 +27,13 @@ export default function Register(props) {
         </Card.Body>
       </Card>
       <br />
-      <Form id="myForm" onSubmit={handleSubmit}>
-        <Form.Group id='myGroup' >
-          <Form.Label>User:</Form.Label>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Username:</Form.Label>
           <Form.Control
             type="text"
             value={user}
             id="userName"
-            autoComplete="username"
             name="userName"
             onChange={(e) => setUser(e.target.value)}
           />
@@ -66,17 +61,16 @@ export default function Register(props) {
           />
         </Form.Group>
         <br />
-        {warning && (
-          <>
-            <br />
-            <Alert variant="danger">{warning}</Alert>
-          </>
-        )}
         <Button variant="primary" className="pull-right" type="submit">
           Register
         </Button>
       </Form>
+      {warning && (
+        <>
+          <br />
+          <Alert variant="danger">{warning}</Alert>
+        </>
+      )}
     </>
   )
 }
-

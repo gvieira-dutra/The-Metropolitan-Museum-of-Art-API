@@ -10,7 +10,6 @@ import { useEffect } from 'react'
 import { addToFavourites, removeFromFavourites } from '@/my-app/lib/userData'
 
 export default function ArtworkCardDetail({ objectID }) {
-  //const objectID = prop.objectID
 
   const [favouritesList, setFavouritesList] = useAtom(favouritesAtom)
   const [showAdded, setShowAdded] = useState(false)
@@ -18,7 +17,7 @@ export default function ArtworkCardDetail({ objectID }) {
   useEffect(() => {
     setShowAdded(favouritesList?.includes(objectID))
   }, [favouritesList])
-  console.log('here')
+  
   const { data, error } = useSWR(
     objectID ? `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}` : null
   )
@@ -31,7 +30,7 @@ export default function ArtworkCardDetail({ objectID }) {
         setFavouritesList(await addToFavourites(objectID))
       }
     } catch (err) {
-      console.log('could not manipulate favourites info due => ', err)
+      console.log(err)
     }
   }
 
@@ -56,7 +55,7 @@ export default function ArtworkCardDetail({ objectID }) {
 
             <br />
             <br />
-            <strong>Artist Name: </strong>
+            <strong>Artist&apos;s Name: </strong>
             {data?.artistDisplayName ? data.artistDisplayName : 'N/A'}
             <br />
 
@@ -82,7 +81,7 @@ export default function ArtworkCardDetail({ objectID }) {
                 <Button
                   className="fav-btn"
                   variant={showAdded ? 'primary' : 'outline-primary'}
-                  onClick={favouritesClicked}>
+                  onClick={() => favouritesClicked()}>
                   {showAdded ? '+ Favourites (added)' : '+ Favourites'}
                 </Button>
                 <br />

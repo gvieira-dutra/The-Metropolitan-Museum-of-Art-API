@@ -9,9 +9,6 @@ export default function Favourites() {
   
   if(!favouritesList) return null;
 
-  console.log('favoutrites list in FAV PAGE: ', favouritesList)
-
-
     return (
       <>
         <Row className="gy-4">
