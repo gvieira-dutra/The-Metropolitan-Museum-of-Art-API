@@ -6,7 +6,7 @@
  *
  *  Name: Gleison Vieira Dutra Student ID: 119237220 Date: Nov 30, 2023
  *
- *  Netlify App Link: https://main--metropolitan-museum-api.netlify.app/
+ *  Netlify App Link: https://the-metropolitan-museum-of-art-api.vercel.app
  *
  ********************************************************************************/
 
