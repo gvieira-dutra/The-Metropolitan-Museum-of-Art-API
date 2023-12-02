@@ -1,18 +1,18 @@
 import { useAtom } from 'jotai'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { favouritesAtom, searchHistoryAtom } from '@/store'
 import { isAuthenticated } from '@/my-app/lib/authenticate'
 import { getFavourites, getHistory } from '@/my-app/lib/userData'
+import { favouritesAtom, searchHistoryAtom } from '@/store'
+
+const PUBLIC_PATHS = ['/login', '/', '/_error', '/register']
 
 export default function RouteGuard(props) {
-  const PUBLIC_PATHS = ['/login', '/', '/_error', '/register']
-
   const router = useRouter()
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
   const [favouritesList, setFavouritesList] = useAtom(favouritesAtom)
   const [authorized, setAuthorized] = useState(false)
-
+  
   async function updateAtoms() {
     setFavouritesList(await getFavourites())
     setSearchHistory(await getHistory())
@@ -20,7 +20,6 @@ export default function RouteGuard(props) {
 
   useEffect(() => {
     updateAtoms()
-
     authCheck(router.pathname)
 
     router.events.on('routeChangeComplete', authCheck)
@@ -29,9 +28,7 @@ export default function RouteGuard(props) {
       router.events.off('routeChangeComplete', authCheck)
     }
   }, [])
-
   function authCheck(url) {
-    // redirect to login page if accessing a private page and not logged in
     const path = url.split('?')[0]
     if (!isAuthenticated() && !PUBLIC_PATHS.includes(path)) {
       setAuthorized(false)
@@ -40,6 +37,5 @@ export default function RouteGuard(props) {
       setAuthorized(true)
     }
   }
-
   return <>{props.children}</>
 }

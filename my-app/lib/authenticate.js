@@ -1,27 +1,25 @@
-import { jwtDecode } from 'jwt-decode'
-
-export function readToken() {
-  const token = getToken()
-  return token ? jwtDecode(token) : null
-}
-
+import jwt_decode from 'jwt-decode'
 
 function setToken(token) {
-  localStorage.setItem('access_token', token)
+  localStorage.setItem("access_token", token)
 }
 
 export function getToken() {
   try {
-    return localStorage.getItem('access_token')
+    return localStorage.getItem("access_token")
   } catch (err) {
     return null
   }
 }
 
 export function removeToken() {
-  localStorage.removeItem('access_token')
+  localStorage.removeItem("access_token")
 }
 
+export function readToken() {
+  const token = getToken()
+  return token ? jwt_decode(token) : null
+}
 
 export function isAuthenticated() {
   const token = readToken()
@@ -30,11 +28,11 @@ export function isAuthenticated() {
 
 export async function authenticateUser(user, password) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({ userName: user, password: password }),
     headers: {
-      'content-type': 'application/json'
-    }
+      "content-type": "application/json",
+    },
   })
 
   const data = await res.json()
@@ -49,15 +47,15 @@ export async function authenticateUser(user, password) {
 
 export async function registerUser(user, password, password2) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       userName: user,
       password: password,
-      password2: password2
+      password2: password2,
     }),
     headers: {
-      'content-type': 'application/json'
-    }
+      "content-type": "application/json",
+    },
   })
 
   const data = await res.json()
