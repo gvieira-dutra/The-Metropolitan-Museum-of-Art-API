@@ -1,5 +1,4 @@
 import { getToken } from "./authenticate"
-let token = getToken()
 
 //PUT request to favourites/id route, it will allow us to add an artwork to
 //the favourites list
@@ -9,7 +8,7 @@ export async function addToFavourites(id) {
     {
       method: "PUT",
       headers: {
-        Authorization: `JWT ${token}`,
+        Authorization: `JWT ${getToken()}`,
         "Content-type": "application/json",
       },
     }
@@ -29,7 +28,7 @@ export async function removeFromFavourites(id) {
     {
       method: "DELETE",
       headers: {
-        Authorization: `JWT ${token}`,
+        Authorization: `JWT ${getToken()}`,
         "Content-type": "application/json",
       },
     }
@@ -47,7 +46,7 @@ export async function getFavourites() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/favourites`, {
     method: "GET",
     headers: {
-      Authorization: `JWT ${token}`,
+      Authorization: `JWT ${getToken()}`,
       "Content-type": "application/json",
     },
   })
@@ -65,7 +64,7 @@ export async function addToHistory(id) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history/${id}`, {
     method: "PUT",
     headers: {
-      Authorization: `JWT ${token}`,
+      Authorization: `JWT ${getToken()}`,
       "Content-type": "application/json",
     },
   })
@@ -82,7 +81,7 @@ export async function removeFromHistory(id) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history/${id}`, {
     method: "DELETE",
     headers: {
-      Authorization: `JWT ${token}`,
+      Authorization: `JWT ${getToken()}`,
       "Content-type": "application/json",
     },
   })
@@ -99,7 +98,7 @@ export async function getHistory() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/history`, {
     method: "GET",
     headers: {
-      Authorization: `JWT ${token}`,
+      Authorization: `JWT ${getToken()}`,
       "Content-type": "application/json",
     },
   })
