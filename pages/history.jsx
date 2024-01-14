@@ -21,7 +21,7 @@ export default function History() {
 
   const historyClicked = (e, index) => {
     e.preventDefault()
-    router.push(`../artwork${searchHistory[index]}`)
+    router.push(`../artwork?${searchHistory[index]}`)
   }
 
   const removeHistoryClicked = async (e, index) => {
